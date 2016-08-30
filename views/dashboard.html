@@ -1,0 +1,132 @@
+<style>
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #3e8e41;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {background-color: #f1f1f1}
+
+.show {display:block;}
+</style>
+
+<div class="dropdown" ng-init="dashboard()" style="float: right;">
+  <button onclick="myFunction()" class="dropbtn">Welcome {{Login.name}}</button>
+  <div id="myDropdown" class="dropdown-content">
+    <a href="#/dashboard">Dashboard</a>
+    <a data-toggle="modal" data-target="#myModal1">Profile</a>
+    <a data-toggle="modal" data-target="#myModal">Change Password</a>
+    <a ng-click="logout()">Logout</a>
+  </div>
+</div>
+<!-- *******************************Profile start***************************** -->
+<!-- Modal -->
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Update Profile Details</h4>
+        </div>
+        <div class="modal-body">
+          name  : {{Login.name}}<br>
+          email : {{Login.email}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<!-- *******************************Profile end***************************** -->
+
+
+<!-- *******************************change password start***************************** -->
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Change Password</h4>
+        </div>
+        <div class="modal-body">
+          <form ng-submit="Changepassword(oldpwd,newpwd)">
+		    <div class="form-group">
+		      <label for="pwd">Enter Old Password:</label>
+		      <input type="password" class="form-control" id="pwd" placeholder="Enter password." ng-model="oldpwd">
+		    </div>
+		    <div class="form-group">
+		      <label for="pwd">Enter New Password:</label>
+		      <input type="password" class="form-control" id="pwd" placeholder="Enter password." ng-model="newpwd">
+		    </div>
+		    <button type="submit" class="btn btn-success">Change Password</button>
+		    <p ng-if="sucess==='false'" style="color: red">You Have Enter Wrong Details.!</p>
+		    <p ng-if="sucess==='true'" style="color: green"> Password Change Successfully!</p>
+		  </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<!-- *******************************change password end***************************** -->
+
+<script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+

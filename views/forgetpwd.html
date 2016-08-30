@@ -1,0 +1,26 @@
+<div class="container">
+  <center><h2>Forget Password</h2></center>
+  <form ng-submit="forgetpassword(email,phone,pwd)">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="email">
+    </div>
+    <div class="form-group">
+      <label for="pwd">mobileno:</label>
+      <input type="number" class="form-control" id="pwd" placeholder="Enter mobileno." ng-model="phone">
+    </div>
+     <div class="form-group">
+      <label for="pwd">Enter New Password:</label>
+      <input type="password" class="form-control" id="pwd" placeholder="Enter password." ng-model="pwd">
+    </div>
+    <button type="submit" class="btn btn-success">Change Password</button>
+    <a href="#/main" class="btn btn-success">Login</a>
+    <center>
+    <p ng-if="sucess==='false'" style="color: red">You Have Enter Wrong Details.!</p>
+    <p ng-if="sucess==='true'" style="color: green"> Password Change Successfully!</p>
+    </center>
+  </form>
+    
+    </center>
+  </div>
+</div>
