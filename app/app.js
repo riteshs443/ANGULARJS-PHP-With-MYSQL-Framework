@@ -1,4 +1,4 @@
-var app=angular.module('edoofa',["ngRoute"]);
+var app=angular.module('edoofa',['ngRoute','toaster']);
 
 app.config(function($routeProvider) {
   $routeProvider

@@ -11,10 +11,11 @@
         $name=$post->name;
         $email=$post->email;
         $phone=$post->phone;
+        $country=$post->country;
         $password=md5($post->pwd);
         $dor=$post->dor;
-        $sql = "INSERT INTO register (name,email,phone,password,dor)
-        VALUES ('$name','$email','$phone','$password','$dor')";
+        $sql = "INSERT INTO register (name,email,phone,password,dor,country)
+        VALUES ('$name','$email','$phone','$password','$dor','$country')";
         if ($conn->query($sql) === TRUE) {
           echo json_encode(1);
         } else {
@@ -36,6 +37,7 @@
           while($row = $result->fetch_assoc()) {
             $_SESSION['email']=$row["email"];
             $_SESSION['name']=$row["name"];
+            $_SESSION['country']=$row["country"];
             $_SESSION['id']=$row["s_no"];
             echo json_encode(1);
           }

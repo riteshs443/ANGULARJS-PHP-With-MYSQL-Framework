@@ -1,27 +1,54 @@
 'use strict';
-app.controller('Auth',function($scope,$http,$location){
+app.controller('Auth',function($scope,$http,$location,toaster){
+
+
+   /*********************Country List *******************/
+    $scope.countryList = function() {
+      $http({
+      method: 'GET', url: 'https://restcountries.eu/rest/v1/all'}).success(function(data) {
+      $scope.countries = data; 
+      });
+    };    
+
+    /*********************Country List End *******************/
+
+    /*********************checkpassword Start*******************/
+    $scope.checkpassword = function(pwd,pwd1) {
+       $scope.pwdsucess='';
+      if(pwd === pwd1){
+        $scope.pwdsucess="passwordmatch";
+        $scope.$evalAsync(); 
+      }else{
+        $scope.pwdsucess="notmatch";
+        $scope.$evalAsync(); 
+      }
+    };    
+
+    /*********************checkpassword End *******************/
+
 
    /* ******************register start********************/
-    $scope.register=function(username,email,pwd,phone){
+    $scope.register=function(username,email,pwd,phone,country){
         $scope.sucess='';
-         $http.post('api/mail.php',{
-                'name'                :   username,
-                'email'               :   email,
-                'phone'               :   phone
-        })
-        .then(function(response) {
-            console.log(response.data);
-         });
    	    $http.post('api/auth.php',{
                 'name'                :   username,
                 'email'               :   email,
                 'phone'               :   phone,
                 'pwd'                 :   pwd,
+                'country'             :   country.name,
                 'dor'                 :   moment().format("YYYY-MM-DD"),
                 'functionName'        :   'register'
         })
         .then(function(response) {
              if(response.data === "1"){
+                 $http.post('api/mail.php',{
+                  'name'                :   username,
+                  'email'               :   email,
+                  'phone'               :   phone
+                 })
+                 .then(function(response) {
+                   console.log(response.data);
+                 });
                  $scope.sucess="true"; 
                  $scope.login(email,pwd);
               }
@@ -96,12 +123,12 @@ app.controller('Auth',function($scope,$http,$location){
                 'functionName'        :   'forgetpassword'
         })
         .then(function(response) {
-            console.log(response.data);
              if(response.data === "0"){
                 $scope.sucess="false";  
               }
               if(response.data === "1"){
-                $scope.sucess="true";  
+                $scope.sucess="true"; 
+                toaster.pop('success', "Congrats!", "Change Password successfully."); 
               }
              
          });
@@ -134,12 +161,12 @@ app.controller('Auth',function($scope,$http,$location){
                 'functionName'        :   'Changepassword'
         })
         .then(function(response) {
-            console.log(response.data);
             if(response.data === "0"){
               $scope.sucess="false";  
             }
             if(response.data === "1"){
-              $scope.sucess="true";  
+              $scope.sucess="true"; 
+              toaster.pop('success', "Congrats!", "Change Password successfully."); 
             }      
         });
     };

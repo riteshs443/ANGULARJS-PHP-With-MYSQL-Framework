@@ -1,3 +1,4 @@
+
 <div class="container" ng-init="checklogin()">
     	<div class="row">
 			<div class="col-md-6 col-md-offset-3">
@@ -13,7 +14,7 @@
 								<a href="#" class="active" id="login-form-link">Login</a>
 							</div>
 							<div class="col-xs-6">
-								<a href="#" id="register-form-link">Register</a>
+								<a href="#" id="register-form-link" ng-click="countryList()">Register</a>
 							</div>
 						</div>
 						<hr>
@@ -58,7 +59,7 @@
 
 
 							<!-- 	*******************************register start********************* -->
-								<form id="register-form" style="display: none;" ng-submit="register(username,email,pwd,Mobileno);">
+								<form id="register-form" style="display: none;" ng-submit="register(username,email,pwd,Mobileno,country);">
 									<div class="form-group">
 										<input type="text" tabindex="1" class="form-control" placeholder="Username" ng-model="username" required>
 									</div>
@@ -69,13 +70,23 @@
 										<input type="password"  tabindex="1" class="form-control" placeholder="Password" ng-model="pwd" required>
 									</div>
 									<div class="form-group">
+										<input type="password"  tabindex="1" class="form-control" placeholder="Confirm Password" ng-model="pwd1" ng-change="checkpassword(pwd,pwd1);" required>
+										<p ng-if="pwdsucess ==='passwordmatch'" style="color: green">Password Match</p>
+										<p ng-if="pwdsucess ==='notmatch'" style="color: red">Password does not same!</p>
+									</div>
+									<div class="form-group">
+										<select class="contry-name form-control"  data-role="listview" name="country" data-inset="true" ng-model="country" ng-options="size as size.name for size in countries" required >
+                                        <option value=""><p style="color:#fff;">Country</p></option>
+                                        </select>
+									</div>
+									<div class="form-group">
 										<input type="number" tabindex="1" class="form-control" placeholder="Mobileno" ng-model="Mobileno" required>
 									</div>
 			
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-											<button type="submit" class="form-control btn btn-register" tabindex="4">
+											<button type="submit" class="form-control btn btn-register" tabindex="4"  ng-disabled="!pwdsucess || pwdsucess ==='notmatch' ">
 												Register
 											</button>
 											<p ng-if="sucess ==='true'" style="color: green">Register Successfully</p>
